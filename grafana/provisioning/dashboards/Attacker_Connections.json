@@ -1,0 +1,84 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Column 1 shows the Honeypot port number Column 2 shows the attacker IP Address",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "ff9ifkauk2kg0f"
+      },
+      "description": "Column 1 shows the Honeypot port number Column 2 shows the attacker IP Address",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 15,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "dedupStrategy": "none",
+        "enableInfiniteScrolling": false,
+        "enableLogDetails": true,
+        "showControls": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "ff9ifkauk2kg0f"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "{app=\"honeypot\", port=~\".+\"} |~ \"New connection\" | pattern `<time> [<_>] New connection: <ip>:<_>` | line_format \"{{.time}} | {{.port}} | {{.ip}}\"",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Attacker Connections",
+      "type": "logs"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Attacker Connections",
+  "uid": "admv6lp",
+  "version": 5
+}

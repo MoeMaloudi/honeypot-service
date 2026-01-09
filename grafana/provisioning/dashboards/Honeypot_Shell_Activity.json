@@ -1,0 +1,85 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "first column is port number of the honeypot container.  second column is attacker IP address. third column is the commands entered",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "ff9ifkauk2kg0f"
+      },
+      "description": "first column is port number of the honeypot container.  second column is attacker ip address. third column is the commands entered",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 16,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "dedupStrategy": "none",
+        "enableInfiniteScrolling": false,
+        "enableLogDetails": true,
+        "showControls": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "ff9ifkauk2kg0f"
+          },
+          "direction": "backward",
+          "editorMode": "code",
+          "expr": "{app=\"honeypot\", port=~\".+\"} |~ \"CMD:\" | pattern `<time> [HoneyPotSSHTransport,<_>,<ip>] CMD: <command>` | line_format \"{{.time}} | {{.port}} | {{.ip}} | {{.command}}\"",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Honeypot Shell Activity",
+      "type": "logs"
+    }
+  ],
+  "preload": false,
+  "refresh": "5s",
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-12h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Honeypot Shell Activity",
+  "uid": "adhfw9d",
+  "version": 4
+}
